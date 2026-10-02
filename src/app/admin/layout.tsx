@@ -133,9 +133,9 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
   const currentUser = auth.user;
 
   return (
-    <div className="min-h-screen flex bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300">
+    <div className="h-screen w-screen flex bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300 overflow-hidden">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-64 border-r border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-900/50 backdrop-blur-md sticky top-0 h-screen z-20">
+      <aside className="hidden lg:flex flex-col w-64 border-r border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-900/50 backdrop-blur-md h-full shrink-0 z-20">
         <div className="h-16 flex items-center px-6 border-b border-zinc-200 dark:border-zinc-900 gap-2.5">
           <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-indigo-600/20">
             EN
@@ -278,9 +278,9 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
       )}
 
       {/* Main Workspace Wrapper */}
-      <div className="flex-1 flex flex-col min-w-0 overflow-x-hidden">
+      <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden relative">
         {/* Header Bar */}
-        <header className={`sticky top-0 z-10 h-16 flex items-center justify-between px-4 sm:px-6 md:px-8 border-b border-zinc-200 dark:border-zinc-900/60 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md transition-all duration-200 ${scrolled ? "shadow-sm border-zinc-200 dark:border-zinc-900" : ""}`}>
+        <header className={`shrink-0 z-10 h-16 flex items-center justify-between px-4 sm:px-6 md:px-8 border-b border-zinc-200 dark:border-zinc-900/60 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md transition-all duration-200 ${scrolled ? "shadow-sm border-zinc-200 dark:border-zinc-900" : ""}`}>
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileMenuOpen(true)}
@@ -331,9 +331,15 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        {/* Content Shell */}
-        <main className="flex-1 p-4 sm:p-6 md:p-8 max-w-7-xl w-full mx-auto animate-in fade-in duration-300">
-          {children}
+        {/* Content Shell with Explicit Scrolling */}
+        <main 
+          onScroll={(e) => setScrolled(e.currentTarget.scrollTop > 10)}
+          className="flex-1 overflow-y-auto w-full scrollbar-thin focus:outline-none"
+          tabIndex={0}
+        >
+          <div className="p-4 sm:p-6 md:p-8 max-w-7xl w-full mx-auto animate-in fade-in duration-300">
+            {children}
+          </div>
         </main>
       </div>
     </div>

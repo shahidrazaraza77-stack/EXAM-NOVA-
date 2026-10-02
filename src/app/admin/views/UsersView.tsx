@@ -633,10 +633,10 @@ export default function UsersView() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.95, y: 15, opacity: 0 }}
               transition={{ type: "spring", duration: 0.35 }}
-              className="relative w-full max-w-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-10"
+              className="relative w-full max-w-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-10 max-h-[90vh] flex flex-col"
             >
               {/* Modal Header */}
-              <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+              <div className="shrink-0 px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
                 <h3 className="font-extrabold text-zinc-900 dark:text-white text-base flex items-center gap-2">
                   <ShieldCheck className="h-5 w-5 text-violet-500" />
                   {modalType === "add" && "Add New User"}
@@ -654,7 +654,7 @@ export default function UsersView() {
 
               {/* View Modal Content */}
               {modalType === "view" && selectedUser && (
-                <div className="p-6 space-y-6">
+                <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin">
                   <div className="flex items-center gap-4">
                     <div className="h-16 w-16 rounded-full bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-extrabold text-2xl shadow-md">
                       {selectedUser.name.split(" ").map(n => n[0]).join("").slice(0, 2) || "U"}
@@ -770,8 +770,8 @@ export default function UsersView() {
 
               {/* Form Content (Add or Edit) */}
               {(modalType === "add" || modalType === "edit") && (
-                <form onSubmit={modalType === "add" ? handleAddSubmit : handleEditSubmit}>
-                  <div className="p-6 space-y-4">
+                <form onSubmit={modalType === "add" ? handleAddSubmit : handleEditSubmit} className="flex flex-col flex-1 overflow-hidden">
+                  <div className="flex-1 overflow-y-auto p-6 space-y-4 scrollbar-thin">
                     {/* If editing, show User ID */}
                     {modalType === "edit" && selectedUser && (
                       <div className="bg-zinc-50 dark:bg-zinc-800/50 p-3 rounded-xl border border-zinc-200 dark:border-zinc-800">
@@ -874,7 +874,7 @@ export default function UsersView() {
                   </div>
 
                   {/* Form Actions */}
-                  <div className="px-6 py-4 bg-zinc-50 dark:bg-zinc-900/60 border-t border-zinc-200 dark:border-zinc-800 flex justify-end gap-3">
+                  <div className="shrink-0 px-6 py-4 bg-zinc-50 dark:bg-zinc-900/60 border-t border-zinc-200 dark:border-zinc-800 flex justify-end gap-3">
                     <Button 
                       type="button" 
                       onClick={() => setModalType(null)} 
