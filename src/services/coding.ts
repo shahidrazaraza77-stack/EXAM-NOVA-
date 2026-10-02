@@ -35,9 +35,51 @@ export interface FrontendCodingProblem {
   companies: string[];
 }
 
+export function normalizeBoilerplates(raw: Record<string, string> | undefined): Record<string, string> {
+  const result: Record<string, string> = {};
+  if (raw && typeof raw === "object") {
+    for (const [key, code] of Object.entries(raw)) {
+      if (!code || typeof code !== "string") continue;
+      const k = key.toLowerCase().trim();
+      result[key] = code;
+      
+      if (k === "cpp" || k === "c++" || k === "cplusplus" || k === "c") {
+        result["C++"] = code;
+        result["cpp"] = code;
+      } else if (k === "python" || k === "py" || k === "python3") {
+        result["Python"] = code;
+        result["python"] = code;
+      } else if (k === "java") {
+        result["Java"] = code;
+        result["java"] = code;
+      } else if (k === "javascript" || k === "js" || k === "node" || k === "typescript" || k === "ts") {
+        result["JavaScript"] = code;
+        result["javascript"] = code;
+      }
+    }
+  }
+
+  // Ensure standard defaults if missing for any language
+  if (!result["Python"]) {
+    result["Python"] = "# Write your Python solution here\nclass Solution:\n    def solve(self):\n        pass\n";
+  }
+  if (!result["C++"]) {
+    result["C++"] = "// Write your C++ solution here\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    void solve() {\n        \n    }\n};\n";
+  }
+  if (!result["Java"]) {
+    result["Java"] = "// Write your Java solution here\nclass Solution {\n    public void solve() {\n        \n    }\n}\n";
+  }
+  if (!result["JavaScript"]) {
+    result["JavaScript"] = "// Write your JavaScript solution here\nfunction solve() {\n  \n}\n";
+  }
+
+  return result;
+}
+
 export function mapDbProblemToFrontend(dbQ: any, userStatus: "Solved" | "Attempted" | "Todo" = "Todo"): FrontendCodingProblem {
   const complexity = (dbQ.complexity as any) || { time: "O(N)", space: "O(1)" };
-  const boilerplates = (dbQ.starter_code as Record<string, string>) || {};
+  const rawBoilerplates = (dbQ.starter_code as Record<string, string>) || {};
+  const boilerplates = normalizeBoilerplates(rawBoilerplates);
   const optimalSolutions = (dbQ.optimal_solutions as Record<string, string>) || {};
   const examples = (dbQ.examples as any[]) || [];
   
@@ -115,7 +157,10 @@ export const codingService = {
       const res = await apiFetch(`/api/coding/problems/${id}`);
       if (res.ok) {
         const data = await res.json();
-        if (data.problem) return data.problem;
+        if (data.problem) {
+          data.problem.boilerplates = normalizeBoilerplates(data.problem.boilerplates || data.problem.starter_code);
+          return data.problem;
+        }
       }
     } catch (e) {
       console.warn("Backend problem fetch failed, using fallback problem data", e);

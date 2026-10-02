@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronLeft, Play, Terminal, RotateCcw, CheckCircle2, AlertCircle, Copy, Check,
@@ -12,6 +13,73 @@ import { codingService, FrontendCodingProblem } from "@/services/coding";
 import { useGamification } from "@/context/GamificationContext";
 
 const languages = ["Python", "C++", "Java", "JavaScript"];
+
+function getDefaultBoilerplate(lang: string): string {
+  const l = lang.toLowerCase().trim();
+  if (l === "c++" || l === "cpp") {
+    return `#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\nusing namespace std;\n\nclass Solution {\npublic:\n    void solve() {\n        // Write your C++ code here\n        \n    }\n};\n`;
+  }
+  if (l === "java") {
+    return `import java.util.*;\n\nclass Solution {\n    public void solve() {\n        // Write your Java code here\n        \n    }\n}\n`;
+  }
+  if (l === "javascript" || l === "js") {
+    return `// Write your JavaScript code here\nfunction solve() {\n    \n}\n`;
+  }
+  return `# Write your Python solution here\nclass Solution:\n    def solve(self):\n        pass\n`;
+}
+
+export function getBoilerplateForLanguage(
+  problem: FrontendCodingProblem | null,
+  lang: string
+): string {
+  if (!problem) return getDefaultBoilerplate(lang);
+  
+  const raw = problem.boilerplates || {};
+  const target = lang.toLowerCase().trim();
+
+  // 1. Direct key match
+  if (raw[lang] && typeof raw[lang] === "string" && raw[lang].trim().length > 0) {
+    return raw[lang];
+  }
+
+  // 2. Language-specific aliases
+  if (target === "c++" || target === "cpp") {
+    for (const k of ["C++", "cpp", "c++", "cplusplus", "c"]) {
+      if (raw[k] && typeof raw[k] === "string" && raw[k].trim().length > 0) return raw[k];
+    }
+    return getDefaultBoilerplate("C++");
+  }
+
+  if (target === "python" || target === "py") {
+    for (const k of ["Python", "python", "py", "python3"]) {
+      if (raw[k] && typeof raw[k] === "string" && raw[k].trim().length > 0) return raw[k];
+    }
+    return getDefaultBoilerplate("Python");
+  }
+
+  if (target === "java") {
+    for (const k of ["Java", "java"]) {
+      if (raw[k] && typeof raw[k] === "string" && raw[k].trim().length > 0) return raw[k];
+    }
+    return getDefaultBoilerplate("Java");
+  }
+
+  if (target === "javascript" || target === "js") {
+    for (const k of ["JavaScript", "javascript", "js", "typescript", "ts"]) {
+      if (raw[k] && typeof raw[k] === "string" && raw[k].trim().length > 0) return raw[k];
+    }
+    return getDefaultBoilerplate("JavaScript");
+  }
+
+  // 3. Any case-insensitive match
+  for (const [key, val] of Object.entries(raw)) {
+    if (key.toLowerCase().trim() === target && typeof val === "string" && val.trim().length > 0) {
+      return val;
+    }
+  }
+
+  return getDefaultBoilerplate(lang);
+}
 
 export default function ProblemDetailView({
   problemId,
@@ -36,11 +104,12 @@ export default function ProblemDetailView({
   const [leftTab, setLeftTab] = useState<"description" | "solution" | "submissions" | "coach">("description");
   const [language, setLanguage] = useState("Python");
   const [code, setCode] = useState("");
-  const [isFullscreen, setIsFullscreen] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [showConsole, setShowConsole] = useState(false);
   const [consoleTab, setConsoleTab] = useState<"input" | "result">("input");
   const [customInput, setCustomInput] = useState("");
-  
+
   // Execution Output state
   const [output, setOutput] = useState<any | null>(null);
   const [isRunning, setIsRunning] = useState(false);
@@ -55,6 +124,21 @@ export default function ProblemDetailView({
   const [loadingHint, setLoadingHint] = useState(false);
   const [loadingReview, setLoadingReview] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Listen for Escape key to exit fullscreen
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isFullscreen]);
+
   // Fetch problem on mount
   useEffect(() => {
     async function loadProblemDetail() {
@@ -67,6 +151,9 @@ export default function ProblemDetailView({
         if (data.examples && data.examples.length > 0) {
           setCustomInput(data.examples[0].input);
         }
+
+        // Initialize code immediately with language boilerplate
+        setCode(getBoilerplateForLanguage(data, language));
 
         // Fetch submissions
         const subsList = await codingService.getSubmissions("", problemId);
@@ -95,14 +182,14 @@ export default function ProblemDetailView({
     async function loadSavedDraft(currProblem: FrontendCodingProblem) {
       try {
         const savedDraft = await codingService.getDraft("", problemId, language);
-        if (savedDraft && savedDraft.code) {
+        if (savedDraft && savedDraft.code && savedDraft.code.trim().length > 0) {
           setCode(savedDraft.code);
         } else {
-          const bp = currProblem.boilerplates[language] || currProblem.boilerplates["Python"] || "";
+          const bp = getBoilerplateForLanguage(currProblem, language);
           setCode(bp);
         }
       } catch (err) {
-        const bp = currProblem.boilerplates[language] || currProblem.boilerplates["Python"] || "";
+        const bp = getBoilerplateForLanguage(currProblem, language);
         setCode(bp);
       }
     }
@@ -251,14 +338,14 @@ export default function ProblemDetailView({
   const resetCode = () => {
     if (!problem) return;
     if (confirm("Reset current editor code to starter boilerplate?")) {
-      const bp = problem.boilerplates[language] || problem.boilerplates["Python"] || "";
+      const bp = getBoilerplateForLanguage(problem, language);
       setCode(bp);
     }
   };
 
   if (loading) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#F8FAFF] dark:bg-[#060816] text-[#111827] dark:text-white flex items-center justify-center p-6">
+      <div className="w-full h-[calc(100vh-60px)] min-h-[500px] flex items-center justify-center p-6 bg-transparent text-[#111827] dark:text-white">
         <div className="flex flex-col items-center gap-3">
           <div className="w-10 h-10 rounded-full border-3 border-[#7C5CFF] border-t-transparent animate-spin" />
           <span className="text-xs font-black tracking-wider text-[#7C5CFF]">Loading LeetCode AI IDE...</span>
@@ -269,7 +356,7 @@ export default function ProblemDetailView({
 
   if (error || !problem) {
     return (
-      <div className="fixed inset-0 z-50 bg-[#F8FAFF] dark:bg-[#060816] text-[#111827] dark:text-white flex flex-col items-center justify-center p-8 text-center space-y-4">
+      <div className="w-full h-[calc(100vh-60px)] min-h-[500px] flex flex-col items-center justify-center p-8 text-center space-y-4 bg-transparent text-[#111827] dark:text-white">
         <AlertTriangle className="w-12 h-12 text-red-500" />
         <div>
           <h3 className="font-black text-xl">Problem Not Available</h3>
@@ -282,12 +369,8 @@ export default function ProblemDetailView({
     );
   }
 
-  return (
-    <div className={`${
-      isFullscreen 
-        ? "fixed inset-0 z-[999999] w-screen h-screen bg-[#F8FAFF] dark:bg-[#060816] p-4 sm:p-6 shadow-2xl" 
-        : "w-full h-full min-h-[550px] p-2 sm:p-3 bg-transparent"
-    } text-[#111827] dark:text-white flex flex-col overflow-hidden font-sans select-none transition-all duration-200`}>
+  const ideContent = (
+    <div className="w-full h-full flex flex-col overflow-hidden">
       
       {/* ─── TOP IDE HEADER BAR ─── */}
       <div className="flex items-center justify-between pb-3 px-2 border-b border-purple-500/15 dark:border-white/10 shrink-0">
@@ -553,7 +636,13 @@ export default function ProblemDetailView({
               <span className="text-xs font-bold text-zinc-400 dark:text-zinc-500">Language:</span>
               <select 
                 value={language} 
-                onChange={(e) => setLanguage(e.target.value)} 
+                onChange={(e) => {
+                  const newLang = e.target.value;
+                  setLanguage(newLang);
+                  if (problem) {
+                    setCode(getBoilerplateForLanguage(problem, newLang));
+                  }
+                }} 
                 className="h-8 rounded-xl border border-purple-500/20 dark:border-white/15 bg-white dark:bg-zinc-900 text-xs font-black px-3 text-[#111827] dark:text-white focus:outline-none focus:ring-2 focus:ring-[#7C5CFF]/20 cursor-pointer"
               >
                 {languages.map((l) => <option key={l} value={l}>{l}</option>)}
@@ -573,17 +662,34 @@ export default function ProblemDetailView({
           <div className="flex-1 min-h-[350px] relative bg-[#1E1E1E]">
             <Editor
               height="100%"
-              language={language.toLowerCase() === "c++" ? "cpp" : language.toLowerCase() === "javascript" ? "javascript" : language.toLowerCase() === "python" ? "python" : "java"}
+              language={
+                language.toLowerCase() === "c++" ? "cpp" :
+                language.toLowerCase() === "javascript" ? "javascript" :
+                language.toLowerCase() === "python" ? "python" : "java"
+              }
               theme="vs-dark"
               value={code}
               onChange={(val) => setCode(val || "")}
+              onMount={(editor) => {
+                setTimeout(() => {
+                  editor.layout();
+                }, 100);
+              }}
+              loading={
+                <div className="flex flex-col items-center justify-center h-full gap-2 text-zinc-400 font-mono text-xs bg-[#1E1E1E]">
+                  <div className="w-6 h-6 border-2 border-[#7C5CFF] border-t-transparent rounded-full animate-spin" />
+                  <span>Loading Code Editor...</span>
+                </div>
+              }
               options={{ 
                 minimap: { enabled: false }, 
                 fontSize: 13, 
                 lineHeight: 22, 
-                fontFamily: "'Fira Code', monospace", 
+                fontFamily: "'Fira Code', 'Courier New', monospace", 
                 scrollBeyondLastLine: false, 
-                automaticLayout: true, 
+                automaticLayout: true,
+                tabSize: 4,
+                wordWrap: "on",
                 padding: { top: 12, bottom: 12 } 
               }}
             />
@@ -732,6 +838,21 @@ export default function ProblemDetailView({
 
       </div>
 
+    </div>
+  );
+
+  if (isFullscreen && mounted) {
+    return createPortal(
+      <div className="fixed inset-0 z-[999999] w-screen h-screen bg-[#F8FAFF] dark:bg-[#060816] p-3 sm:p-5 text-[#111827] dark:text-white flex flex-col overflow-hidden font-sans shadow-2xl">
+        {ideContent}
+      </div>,
+      document.body
+    );
+  }
+
+  return (
+    <div className="w-full h-[calc(100vh-60px)] min-h-[550px] p-2 sm:p-4 bg-transparent text-[#111827] dark:text-white flex flex-col overflow-hidden font-sans">
+      {ideContent}
     </div>
   );
 }

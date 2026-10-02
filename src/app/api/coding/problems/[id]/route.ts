@@ -42,6 +42,41 @@ export async function GET(
       userStatus = hasAccepted ? "Solved" : "Attempted";
     }
 
+    // Normalize starter code for all languages
+    const rawBoilerplates = (q.starter_code as Record<string, string>) || {};
+    const normalizedBoilerplates: Record<string, string> = {};
+    for (const [key, codeVal] of Object.entries(rawBoilerplates)) {
+      if (!codeVal || typeof codeVal !== "string" || !codeVal.trim()) continue;
+      const k = key.toLowerCase().trim();
+      normalizedBoilerplates[key] = codeVal;
+      if (k === "cpp" || k === "c++" || k === "cplusplus" || k === "c") {
+        normalizedBoilerplates["C++"] = codeVal;
+        normalizedBoilerplates["cpp"] = codeVal;
+      } else if (k === "python" || k === "py" || k === "python3") {
+        normalizedBoilerplates["Python"] = codeVal;
+        normalizedBoilerplates["python"] = codeVal;
+      } else if (k === "java") {
+        normalizedBoilerplates["Java"] = codeVal;
+        normalizedBoilerplates["java"] = codeVal;
+      } else if (k === "javascript" || k === "js" || k === "node" || k === "typescript" || k === "ts") {
+        normalizedBoilerplates["JavaScript"] = codeVal;
+        normalizedBoilerplates["javascript"] = codeVal;
+      }
+    }
+
+    if (!normalizedBoilerplates["Python"]) {
+      normalizedBoilerplates["Python"] = "# Write your Python solution here\nclass Solution:\n    def solve(self):\n        pass\n";
+    }
+    if (!normalizedBoilerplates["C++"]) {
+      normalizedBoilerplates["C++"] = "// Write your C++ solution here\n#include <iostream>\n#include <vector>\nusing namespace std;\n\nclass Solution {\npublic:\n    void solve() {\n        \n    }\n};\n";
+    }
+    if (!normalizedBoilerplates["Java"]) {
+      normalizedBoilerplates["Java"] = "// Write your Java solution here\nclass Solution {\n    public void solve() {\n        \n    }\n}\n";
+    }
+    if (!normalizedBoilerplates["JavaScript"]) {
+      normalizedBoilerplates["JavaScript"] = "// Write your JavaScript solution here\nfunction solve() {\n  \n}\n";
+    }
+
     const problem = {
       id: q.id,
       title: q.title,
@@ -57,7 +92,7 @@ export async function GET(
       examples: q.examples || [],
       explanation: q.explanation || "",
       complexity: q.complexity || { time: "O(N)", space: "O(1)" },
-      boilerplates: q.starter_code || {},
+      boilerplates: normalizedBoilerplates,
       optimalSolutions: q.optimal_solutions || {},
       companies: q.companies || [],
     };
