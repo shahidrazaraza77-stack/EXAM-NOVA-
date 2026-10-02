@@ -12,7 +12,7 @@ export interface MockUser {
   id: string;
   name: string;
   email: string;
-  role: "Admin" | "Content Manager" | "Student";
+  role: "Admin" | "Content Manager" | "Student" | "Recruiter";
   status: "Active" | "Disabled";
   lastActive: string;
 }
@@ -124,6 +124,7 @@ interface AdminContextType {
   addUser: (user: Omit<MockUser, "id" | "lastActive">) => Promise<void>;
   updateUser: (id: string, updates: Partial<MockUser>) => Promise<void>;
   deleteUser: (id: string) => Promise<void>;
+  toggleAdminRole: (userId: string, currentRole: string) => Promise<void>;
   
   // Aptitude Questions
   addAptitudeQ: (q: Omit<AptitudeQuestion, "id">) => Promise<void>;
@@ -194,8 +195,8 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [contentItems, setContentItems] = useState<ContentItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [rolePermissions, setRolePermissions] = useState<RolePermission[]>([
+    { role: "Content Manager", dashboard: "Full", users: "Full", questions: "Full", companies: "Full", tests: "Full", content: "Full", settings: "Full" },
     { role: "Admin", dashboard: "Full", users: "Full", questions: "Full", companies: "Full", tests: "Full", content: "Full", settings: "Full" },
-    { role: "Content Manager", dashboard: "View", users: "None", questions: "Full", companies: "Full", tests: "Full", content: "Full", settings: "None" },
     { role: "Student", dashboard: "View", users: "None", questions: "View", companies: "View", tests: "View", content: "View", settings: "None" },
   ]);
   const [settings, setSettings] = useState<PlatformSettings>({
@@ -229,15 +230,21 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(true);
       
       // 1. Fetch Users from profiles
-      const { data: dbUsers } = await (supabase as any).from("profiles").select("*");
+      const { data: dbUsers } = await (supabase as any).from("profiles").select("*").order("created_at", { ascending: false });
       if (dbUsers) {
         setUsers(dbUsers.map((u: any) => ({
           id: u.id,
-          name: u.full_name || "User",
+          name: u.full_name || u.email?.split("@")[0] || "User",
           email: u.email || "",
-          role: u.role === "admin" ? "Admin" : u.role === "content_manager" ? "Content Manager" : "Student",
+          role: u.role === "admin" 
+            ? "Admin" 
+            : u.role === "content_manager" 
+            ? "Content Manager" 
+            : u.role === "recruiter" 
+            ? "Recruiter" 
+            : "Student",
           status: u.suspended ? "Disabled" : "Active",
-          lastActive: "Recent",
+          lastActive: u.updated_at ? new Date(u.updated_at).toLocaleDateString() : "Recent",
         })));
       }
 
@@ -459,17 +466,31 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         body: JSON.stringify(updates),
       });
 
+      const resData = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || "Failed to update user");
+        throw new Error(resData.error || "Failed to update user");
       }
 
       await refreshData();
-      await addActivityLog({ action: "User Updated", description: `Updated user profile ${id}`, user: "Admin", category: "user" });
+      await addActivityLog({ 
+        action: "User Updated", 
+        description: `Updated user profile ${updates.name || id} ${updates.role ? `(Role: ${updates.role})` : ""}`, 
+        user: "Admin", 
+        category: "user" 
+      });
+      return resData;
     } catch (err) {
-      console.error(err);
+      console.error("[ADMIN_CONTEXT] updateUser error:", err);
       throw err;
     }
+  };
+
+  const toggleAdminRole = async (userId: string, currentRole: string) => {
+    if (currentRole === "Content Manager") {
+      throw new Error("Content Manager holds master authority and cannot have their role modified by admin.");
+    }
+    const nextRole = currentRole === "Admin" ? "Student" : "Admin";
+    await updateUser(userId, { role: nextRole as any });
   };
 
   const deleteUser = async (id: string) => {
@@ -902,6 +923,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         addUser,
         updateUser,
         deleteUser,
+        toggleAdminRole,
         
         addAptitudeQ,
         editAptitudeQ,
