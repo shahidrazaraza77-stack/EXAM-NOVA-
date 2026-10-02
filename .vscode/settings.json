@@ -1,0 +1,15 @@
+{
+  "remote.autoForwardPorts": false,
+  "remote.restoreForwardedPorts": false,
+  "remote.portsAttributes": {
+    "3000": {
+      "label": "ExamNova Local App",
+      "onAutoForward": "ignore",
+      "elevateIfNeeded": false
+    },
+    "3001": {
+      "onAutoForward": "ignore",
+      "elevateIfNeeded": false
+    }
+  }
+}
