@@ -90,7 +90,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       .eq("id", user.id)
       .single();
 
-    if (profile?.role !== "admin") {
+    if (profile?.role !== "admin" && profile?.role !== "content_manager") {
       return NextResponse.json({ error: "Admin access required" }, { status: 403 });
     }
 
@@ -145,7 +145,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
       .eq("id", user.id)
       .single();
 
-    if (profile?.role !== "admin") {
+    if (profile?.role !== "admin" && profile?.role !== "content_manager") {
       return NextResponse.json({ error: "Admin access required" }, { status: 403 });
     }
 

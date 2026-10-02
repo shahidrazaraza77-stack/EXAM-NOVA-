@@ -12,7 +12,7 @@ async function validateAdmin(request: NextRequest): Promise<{ userId: string | n
   }
   const { data: profile } = await (supabaseAdmin.from("profiles") as any)
     .select("role").eq("id", user.id).single();
-  if ((profile as any)?.role !== "admin") {
+  if ((profile as any)?.role !== "admin" && (profile as any)?.role !== "content_manager") {
     return { userId: null, errorResponse: NextResponse.json({ error: "Forbidden" }, { status: 403 }) };
   }
   return { userId: user.id };

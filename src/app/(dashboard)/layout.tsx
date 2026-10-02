@@ -159,7 +159,7 @@ function SidebarContent({
                 {user?.name || "Student"}
               </div>
               <div className="text-[10px] truncate leading-none" style={{ color: "var(--aurora-text-muted)" }}>
-                {user?.role === "admin" ? "Admin" : user?.role === "recruiter" ? "Recruiter" : "Student"}
+                {user?.role === "admin" ? "Admin" : user?.role === "content_manager" ? "Content Manager" : user?.role === "recruiter" ? "Recruiter" : "Student"}
               </div>
             </div>
           </div>
@@ -251,7 +251,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         ]},
         { groupName: "Account", items: [
           { label: "Settings", href: "/dashboard/settings", icon: Settings },
-          ...(user?.role === "admin" ? [{ label: "Admin Panel", href: "/admin", icon: ShieldCheck, badge: "ADMIN" }] : []),
+          ...((user?.role === "admin" || user?.role === "content_manager") ? [{ label: "Admin Panel", href: "/admin", icon: ShieldCheck, badge: user?.role === "content_manager" ? "MANAGER" : "ADMIN" }] : []),
         ]},
       ];
 
@@ -471,6 +471,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         {[
                           { href: "/dashboard/settings", icon: User, label: "My Profile" },
                           { href: "/dashboard/settings", icon: Settings, label: "Settings" },
+                          ...((user?.role === "admin" || user?.role === "content_manager") ? [{ href: "/admin", icon: ShieldCheck, label: "Admin Panel" }] : []),
                         ].map(({ href, icon: Icon, label }) => (
                           <Link
                             key={label}

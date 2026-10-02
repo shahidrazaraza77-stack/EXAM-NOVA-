@@ -119,7 +119,7 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
     router.push(exitDestination);
   };
 
-  if (auth.loading || !auth.user || auth.user.role === "student") {
+  if (auth.loading || !auth.user || (auth.user.role !== "admin" && auth.user.role !== "content_manager")) {
     return (
       <div className="min-h-screen w-screen flex items-center justify-center bg-zinc-50 dark:bg-zinc-950">
         <div className="text-center space-y-4">
