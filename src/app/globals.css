@@ -686,6 +686,11 @@ body {
   50% { transform: translate3d(0, -15px, 0) rotate(-3deg); }
 }
 
+@keyframes floatBubble {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
 @keyframes floatMascot {
   0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
   50% { transform: translate3d(0, -14px, 0) rotate(2deg) scale(1.02); }
@@ -716,6 +721,10 @@ body {
 }
 .animate-float-3 {
   animation: floatY3 4.5s ease-in-out infinite;
+  will-change: transform;
+}
+.animate-float-bubble {
+  animation: floatBubble 3.8s ease-in-out infinite;
   will-change: transform;
 }
 .animate-float-mascot {

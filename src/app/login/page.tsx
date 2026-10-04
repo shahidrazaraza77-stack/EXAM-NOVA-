@@ -218,9 +218,9 @@ function LoginPageContent() {
             <div className="absolute w-80 h-80 xl:w-96 xl:h-96 rounded-full bg-gradient-to-tr from-[#7C5CFF]/20 via-[#FF2E8B]/15 to-[#00D9FF]/20 blur-3xl animate-pulse" />
             <div className="absolute w-72 h-72 xl:w-80 xl:h-80 rounded-full border border-purple-500/25 dark:border-white/15 border-dashed pointer-events-none" />
 
-            {/* CHAT BUBBLE ABOVE ROBOT (Properly elevated so it never overlaps widgets) */}
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-30 pointer-events-none max-w-md w-auto animate-float-2">
-              <div className="px-4 py-2 rounded-2xl shadow-xl border border-[#FF2E8B]/35 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl flex items-center gap-2.5 text-xs font-black text-[#111827] dark:text-white relative whitespace-nowrap shadow-purple-500/10">
+            {/* CHAT BUBBLE ABOVE ROBOT (Level, centered, smooth pure vertical float) */}
+            <div className="absolute -top-5 left-1/2 -translate-x-1/2 z-30 pointer-events-none w-max max-w-[92vw]">
+              <div className="animate-float-bubble px-4 py-2 rounded-2xl shadow-xl border border-[#FF2E8B]/35 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl flex items-center gap-2.5 text-xs font-black text-[#111827] dark:text-white relative whitespace-nowrap shadow-purple-500/10">
                 <span className="text-sm">🤖</span>
                 <span className="font-extrabold text-[#7C5CFF] dark:text-[#00D9FF]">NOVA AI:</span>
                 <span>"Welcome back! Ready to continue your placement journey?"</span>

@@ -303,8 +303,8 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* SPEECH BUBBLE FROM 3D MASCOT */}
-            <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-30 pointer-events-none w-max animate-float-2">
+            {/* SPEECH BUBBLE FROM 3D MASCOT (Level, centered, smooth pure vertical float) */}
+            <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-30 pointer-events-none w-max max-w-[92vw]">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={speechIndex}
@@ -312,7 +312,7 @@ export default function Hero() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -6, scale: 0.95 }}
                   transition={{ duration: 0.35 }}
-                  className="glass-pill px-4 py-2 rounded-2xl shadow-xl border border-pink-500/30 flex items-center gap-2 text-xs font-bold text-zinc-900 dark:text-white relative"
+                  className="animate-float-bubble glass-pill px-4 py-2 rounded-2xl shadow-xl border border-pink-500/30 flex items-center gap-2 text-xs font-bold text-zinc-900 dark:text-white relative"
                 >
                   <span>{SPEECH_MESSAGES[speechIndex]}</span>
                   <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-zinc-800 rotate-45 border-r border-b border-pink-500/30" />

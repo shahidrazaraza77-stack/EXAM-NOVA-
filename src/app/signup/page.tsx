@@ -234,9 +234,9 @@ function NewMascotRegistrationPage() {
           <div className="absolute w-72 h-72 xl:w-80 xl:h-80 rounded-full bg-gradient-to-tr from-[#FF2E8B]/20 via-[#7B61FF]/25 to-[#5B8CFF]/20 blur-3xl animate-pulse" />
           <div className="absolute w-64 h-64 xl:w-72 xl:h-72 rounded-full border border-white/70 dark:border-white/20 bg-white/10 dark:bg-white/5 backdrop-blur-md shadow-2xl pointer-events-none" />
 
-          {/* SPEECH BUBBLE ABOVE MASCOT */}
-          <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-30 pointer-events-none w-max animate-float-2">
-            <div className="glass-pill px-4 py-1.5 rounded-2xl shadow-xl border border-[#FF2E8B]/30 flex items-center gap-2 text-xs font-extrabold text-[#111827] dark:text-white relative">
+          {/* SPEECH BUBBLE ABOVE MASCOT (Level, centered, smooth pure vertical float) */}
+          <div className="absolute -top-10 left-1/2 -translate-x-1/2 z-30 pointer-events-none w-max max-w-[92vw]">
+            <div className="animate-float-bubble glass-pill px-4 py-1.5 rounded-2xl shadow-xl border border-[#FF2E8B]/30 flex items-center gap-2 text-xs font-extrabold text-[#111827] dark:text-white relative">
               <span>Hi, I'm Nova 👋 Ready to start your AI career journey?</span>
               <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-zinc-900 rotate-45 border-r border-b border-[#FF2E8B]/30" />
             </div>
