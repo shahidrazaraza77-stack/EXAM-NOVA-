@@ -70,7 +70,7 @@ export default function Hero() {
     if (isHeadlinePaused) return;
     const timer = setInterval(() => {
       setHeadlineIndex((prev) => (prev + 1) % ROTATING_HEADLINES.length);
-    }, 3800);
+    }, 1600);
     return () => clearInterval(timer);
   }, [isHeadlinePaused]);
 
@@ -127,10 +127,10 @@ export default function Hero() {
               <AnimatePresence mode="wait">
                 <motion.h1
                   key={headlineIndex}
-                  initial={{ opacity: 0, y: 22, filter: "blur(5px)" }}
+                  initial={{ opacity: 0, y: 14, filter: "blur(2px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                  exit={{ opacity: 0, y: -22, filter: "blur(5px)" }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: -14, filter: "blur(2px)" }}
+                  transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                   className="text-4xl sm:text-5xl lg:text-6xl font-black text-zinc-950 dark:text-white tracking-tight leading-[1.15]"
                 >
                   {ROTATING_HEADLINES[headlineIndex].prefix}{" "}
