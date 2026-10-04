@@ -18,9 +18,44 @@ const SPEECH_MESSAGES = [
   "Keep learning every day.",
 ];
 
+const ROTATING_HEADLINES = [
+  {
+    prefix: "Land Your",
+    title: "Dream Job",
+    highlight: "Faster.",
+    gradient: "from-pink-500 via-purple-600 to-indigo-600",
+  },
+  {
+    prefix: "Ace Real-Time",
+    title: "AI Mock Interviews",
+    highlight: "Live.",
+    gradient: "from-purple-500 via-indigo-600 to-blue-600",
+  },
+  {
+    prefix: "Build 100%",
+    title: "ATS Resumes",
+    highlight: "Instantly.",
+    gradient: "from-pink-500 via-rose-600 to-purple-600",
+  },
+  {
+    prefix: "Crack Technical",
+    title: "Coding Rounds",
+    highlight: "Easily.",
+    gradient: "from-blue-500 via-indigo-600 to-purple-600",
+  },
+  {
+    prefix: "Secure Top Tier",
+    title: "Tech Placements",
+    highlight: "Guaranteed.",
+    gradient: "from-emerald-500 via-teal-600 to-indigo-600",
+  },
+];
+
 export default function Hero() {
   const [showDemoModal, setShowDemoModal] = useState(false);
   const [speechIndex, setSpeechIndex] = useState(0);
+  const [headlineIndex, setHeadlineIndex] = useState(0);
+  const [isHeadlinePaused, setIsHeadlinePaused] = useState(false);
 
   // Cycle speech bubble messages every 3.5 seconds
   useEffect(() => {
@@ -29,6 +64,15 @@ export default function Hero() {
     }, 3500);
     return () => clearInterval(timer);
   }, []);
+
+  // Continuous changing headline rotation (pauses on hover)
+  useEffect(() => {
+    if (isHeadlinePaused) return;
+    const timer = setInterval(() => {
+      setHeadlineIndex((prev) => (prev + 1) % ROTATING_HEADLINES.length);
+    }, 3800);
+    return () => clearInterval(timer);
+  }, [isHeadlinePaused]);
 
   return (
     <section id="hero" className="relative min-h-[85vh] flex items-center pt-24 pb-12 overflow-hidden bg-examnova-pastel">
@@ -74,13 +118,50 @@ export default function Hero() {
               </span>
             </div>
 
-            {/* Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-zinc-950 dark:text-white tracking-tight leading-[1.15]">
-              Land Your <span className="font-extrabold text-zinc-950 dark:text-white">Dream Job</span>{" "}
-              <span className="bg-gradient-to-r from-pink-500 via-purple-600 to-indigo-600 bg-clip-text text-transparent inline-block">
-                Faster.
-              </span>
-            </h1>
+            {/* Continuously Rotating Dynamic Headline */}
+            <div
+              className="relative min-h-[110px] sm:min-h-[130px] lg:min-h-[155px] flex flex-col justify-center"
+              onMouseEnter={() => setIsHeadlinePaused(true)}
+              onMouseLeave={() => setIsHeadlinePaused(false)}
+            >
+              <AnimatePresence mode="wait">
+                <motion.h1
+                  key={headlineIndex}
+                  initial={{ opacity: 0, y: 22, filter: "blur(5px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -22, filter: "blur(5px)" }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-4xl sm:text-5xl lg:text-6xl font-black text-zinc-950 dark:text-white tracking-tight leading-[1.15]"
+                >
+                  {ROTATING_HEADLINES[headlineIndex].prefix}{" "}
+                  <span className="font-extrabold text-zinc-950 dark:text-white">
+                    {ROTATING_HEADLINES[headlineIndex].title}
+                  </span>{" "}
+                  <span
+                    className={`bg-gradient-to-r ${ROTATING_HEADLINES[headlineIndex].gradient} bg-clip-text text-transparent inline-block drop-shadow-sm`}
+                  >
+                    {ROTATING_HEADLINES[headlineIndex].highlight}
+                  </span>
+                </motion.h1>
+              </AnimatePresence>
+
+              {/* Headline Carousel Indicator Pills */}
+              <div className="flex items-center gap-1.5 pt-3">
+                {ROTATING_HEADLINES.map((item, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setHeadlineIndex(idx)}
+                    aria-label={`Jump to ${item.title}`}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      headlineIndex === idx
+                        ? `w-8 bg-gradient-to-r ${item.gradient}`
+                        : "w-2 bg-zinc-300 dark:bg-zinc-700 hover:bg-zinc-400 dark:hover:bg-zinc-600"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
 
             {/* Paragraph with required features */}
             <p className="text-lg sm:text-xl text-zinc-600 dark:text-zinc-300 font-normal leading-relaxed max-w-2xl">
