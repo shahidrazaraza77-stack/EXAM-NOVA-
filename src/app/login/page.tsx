@@ -9,21 +9,19 @@ import { motion } from "framer-motion";
 import { 
   Mail, Lock, ArrowLeft, AlertCircle, 
   ArrowRight, ShieldCheck, Zap, Users, Sparkles, 
-  BarChart3, Code2, BrainCircuit, FileText, Mic, Eye, EyeOff, CheckCircle2, Building2, Award, Flame
+  Code2, FileText, Mic, Eye, EyeOff, Building2, Award
 } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { mfaService } from "@/services/mfa.service";
 
-// 8 FLOATING GLASS WIDGET SPECS
+// 6 BALANCED ORBITING GLASS WIDGETS (Strategically spaced to prevent any overlap)
 const FLOATING_WIDGETS = [
-  { id: "resume", title: "Resume Score 98%", subtitle: "ATS Verified", icon: FileText, color: "text-[#FF2E8B]", borderColor: "border-[#FF2E8B]/40", top: "2%", left: "-2%" },
-  { id: "coding", title: "Coding Progress 450+", subtitle: "Problems Solved", icon: Code2, color: "text-[#4F7CFF]", borderColor: "border-[#4F7CFF]/40", top: "0%", right: "4%" },
-  { id: "interview", title: "Interview Ready", subtitle: "AI Feedback Enabled", icon: Mic, color: "text-[#7C5CFF]", borderColor: "border-[#7C5CFF]/40", top: "26%", left: "-4%" },
-  { id: "readiness", title: "Placement Readiness", subtitle: "Top 5% Rank", icon: Award, color: "text-[#00FFC6]", borderColor: "border-[#00FFC6]/40", top: "24%", right: "-4%" },
-  { id: "google", title: "Google Preparation 89%", subtitle: "Pass Probability", icon: Sparkles, color: "text-[#00D9FF]", borderColor: "border-[#00D9FF]/40", top: "54%", left: "0%" },
-  { id: "microsoft", title: "Microsoft Track", subtitle: "Completed ✓", icon: Building2, color: "text-[#7C5CFF]", borderColor: "border-[#7C5CFF]/40", top: "52%", right: "2%" },
-  { id: "match", title: "Job Match 99%", subtitle: "Target Unlocked", icon: Zap, color: "text-[#FF2E8B]", borderColor: "border-[#FF2E8B]/40", top: "78%", left: "6%" },
-  { id: "goal", title: "Weekly Goal 5/5", subtitle: "Challenges Active", icon: Flame, color: "text-[#00FFC6]", borderColor: "border-[#00FFC6]/40", top: "76%", right: "6%" },
+  { id: "resume", title: "ATS Resume 98%", subtitle: "AI Scored & Verified", icon: FileText, color: "text-[#FF2E8B]", borderColor: "border-[#FF2E8B]/40", top: "12%", left: "-2%" },
+  { id: "coding", title: "450+ Solved", subtitle: "Data Structures & Algo", icon: Code2, color: "text-[#4F7CFF]", borderColor: "border-[#4F7CFF]/40", top: "10%", right: "0%" },
+  { id: "interview", title: "AI Interview Coach", subtitle: "Real-time Voice Feedback", icon: Mic, color: "text-[#7C5CFF]", borderColor: "border-[#7C5CFF]/40", top: "42%", left: "-6%" },
+  { id: "readiness", title: "Placement Rank #1", subtitle: "Top 1% Percentile", icon: Award, color: "text-[#00FFC6]", borderColor: "border-[#00FFC6]/40", top: "40%", right: "-5%" },
+  { id: "match", title: "99% Job Fit", subtitle: "Target Tech Role", icon: Zap, color: "text-[#FF2E8B]", borderColor: "border-[#FF2E8B]/40", top: "72%", left: "2%" },
+  { id: "offer", title: "Dream Offer", subtitle: "Interview Cleared ✓", icon: Sparkles, color: "text-[#00D9FF]", borderColor: "border-[#00D9FF]/40", top: "70%", right: "2%" },
 ];
 
 function LoginPageContent() {
@@ -118,7 +116,7 @@ function LoginPageContent() {
 
   return (
     <div 
-      className="w-full min-h-screen max-h-screen overflow-hidden flex flex-col font-sans select-none relative bg-[#F8FAFF] dark:bg-[#070B1D] text-[#111827] dark:text-white transition-colors duration-300"
+      className="w-full min-h-screen min-h-dvh flex flex-col font-sans relative bg-[#F8FAFF] dark:bg-[#070B1D] text-[#111827] dark:text-white transition-colors duration-300"
       style={{
         backgroundImage: `
           radial-gradient(circle at 10% 12%, rgba(124, 92, 255, 0.12) 0%, transparent 45%),
@@ -144,60 +142,61 @@ function LoginPageContent() {
 
         {/* Aurora Volumetric Light Blobs */}
         <div className="absolute top-[-120px] left-[15%] w-[650px] h-[650px] rounded-full bg-[#7C5CFF]/15 dark:bg-[#7C5CFF]/22 blur-[160px] animate-pulse" />
-        <div className="absolute bottom-[-120px] left-[5%] w-[700px] h-[700px] rounded-full bg-[#FF2E8B]/15 dark:bg-[#FF2E8B]/22 blur-[180px] animate-pulse" style={{ animationDelay: '2.5s' }} />
+        <div className="absolute bottom-[-120px] left-[5%] w-[700px] h-[700px] rounded-full bg-[#FF2E8B]/15 dark:bg-[#FF2E8B]/22 blur-[180px] animate-pulse" style={{ animationDelay: "2.5s" }} />
         <div className="absolute top-[30%] right-[8%] w-[600px] h-[600px] rounded-full bg-[#00D9FF]/15 dark:bg-[#00D9FF]/22 blur-[160px]" />
 
         {/* Floating Particles */}
-        {[...Array(20)].map((_, i) => (
+        {[...Array(16)].map((_, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-gradient-to-tr from-[#7C5CFF] via-[#FF2E8B] to-[#00D9FF] animate-particle-drift"
             style={{
-              width: `${(i % 4) + 2}px`,
-              height: `${(i % 4) + 2}px`,
+              width: `${(i % 3) + 2}px`,
+              height: `${(i % 3) + 2}px`,
               top: `${((i * 17) % 90) + 5}%`,
               left: `${((i * 23) % 90) + 5}%`,
-              opacity: 0.3 + ((i % 4) * 0.1),
-              animationDuration: `${7 + (i % 6)}s`,
-              animationDelay: `${i % 4}s`,
+              opacity: 0.25 + ((i % 3) * 0.1),
+              animationDuration: `${8 + (i % 5)}s`,
+              animationDelay: `${i % 3}s`,
             }}
           />
         ))}
       </div>
 
       {/* ─── TOP GLASS NAVIGATION BAR ─── */}
-      <header className="relative z-30 px-6 py-4 flex items-center justify-between">
+      <header className="relative z-30 px-3.5 py-2.5 sm:px-6 sm:py-3.5 flex items-center justify-between">
         
         {/* Left: Back to Home */}
         <Link 
           href="/" 
-          className="px-4 py-2 rounded-2xl bg-white/80 dark:bg-white/[0.08] backdrop-blur-xl border border-purple-500/15 dark:border-white/15 text-xs font-black text-zinc-700 dark:text-zinc-200 hover:text-[#FF2E8B] dark:hover:text-white transition-all flex items-center gap-2 shadow-sm hover:scale-105"
+          className="px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl bg-white/80 dark:bg-white/[0.08] backdrop-blur-xl border border-purple-500/15 dark:border-white/15 text-xs font-black text-zinc-700 dark:text-zinc-200 hover:text-[#FF2E8B] dark:hover:text-white transition-all flex items-center gap-1.5 sm:gap-2 shadow-sm hover:scale-105"
         >
           <ArrowLeft className="w-4 h-4 text-[#FF2E8B]" />
-          <span>Back to Home</span>
+          <span className="hidden sm:inline">Back to Home</span>
+          <span className="sm:hidden">Home</span>
         </Link>
 
         {/* Center: ExamNova Logo & AI Workspace OS Badge */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <Link href="/" className="flex items-center gap-2 group select-none">
-            <div className="w-9 h-9 rounded-2xl bg-gradient-to-tr from-[#FF2E8B] via-[#7C5CFF] to-[#00D9FF] p-[1.5px] shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-2xl bg-gradient-to-tr from-[#FF2E8B] via-[#7C5CFF] to-[#00D9FF] p-[1.5px] shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform">
               <div className="w-full h-full bg-white dark:bg-zinc-950 rounded-[14px] flex items-center justify-center overflow-hidden">
                 <img src="/logo.jpg" className="w-full h-full object-cover" alt="ExamNova Logo" />
               </div>
             </div>
-            <span className="font-extrabold text-lg tracking-tight text-zinc-950 dark:text-white">
+            <span className="font-extrabold text-base sm:text-lg tracking-tight text-zinc-950 dark:text-white">
               Exam<span className="bg-gradient-to-r from-[#FF2E8B] via-[#7C5CFF] to-[#00D9FF] bg-clip-text text-transparent">Nova</span>
             </span>
           </Link>
 
-          <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-cyan-500/10 border border-purple-500/20 dark:border-white/15 text-xs font-black text-purple-700 dark:text-purple-300 backdrop-blur-md">
+          <div className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-cyan-500/10 border border-purple-500/20 dark:border-white/15 text-xs font-black text-purple-700 dark:text-purple-300 backdrop-blur-md select-none">
             <Sparkles className="w-3.5 h-3.5 text-[#FF2E8B] animate-pulse" />
             <span>AI Workspace OS</span>
           </div>
         </div>
 
         {/* Right: Theme Toggle */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <div className="px-2 py-1 rounded-2xl bg-white/80 dark:bg-white/[0.08] backdrop-blur-xl border border-purple-500/15 dark:border-white/15 shadow-sm">
             <ThemeToggle />
           </div>
@@ -205,56 +204,56 @@ function LoginPageContent() {
 
       </header>
 
-      {/* ─── MAIN CONTENT: LEFT 60% SHOWCASE + RIGHT 40% LOGIN CARD ─── */}
-      <main className="flex-1 relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center py-4 sm:py-6">
+      {/* ─── MAIN CONTENT: RESPONSIVE SHOWCASE + ULTRA-PREMIUM LOGIN CARD ─── */}
+      <main className="flex-1 relative z-10 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center py-2 sm:py-4 lg:py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
           
           {/* ═══════════════════════════════════════════════════
-             LEFT SIDE (60% / 7 COLS): FLOATING 3D AI ROBOT SCENE
+             LEFT SIDE (DESKTOP ONLY / 7 COLS): FLOATING 3D AI ROBOT SCENE
           ═══════════════════════════════════════════════════ */}
           <div 
-            className="lg:col-span-7 relative flex flex-col items-center justify-center min-h-[440px] xl:min-h-[480px] w-full"
+            className="hidden lg:flex lg:col-span-7 relative flex-col items-center justify-center min-h-[480px] xl:min-h-[520px] w-full select-none"
           >
             {/* Holographic Plasma Glow Circles */}
-            <div className="absolute w-80 h-80 xl:w-96 xl:h-96 rounded-full bg-gradient-to-tr from-[#7C5CFF]/25 via-[#FF2E8B]/20 to-[#00D9FF]/25 blur-3xl animate-pulse" />
-            <div className="absolute w-72 h-72 xl:w-80 xl:h-80 rounded-full border border-purple-500/30 dark:border-white/20 border-dashed pointer-events-none" />
+            <div className="absolute w-80 h-80 xl:w-96 xl:h-96 rounded-full bg-gradient-to-tr from-[#7C5CFF]/20 via-[#FF2E8B]/15 to-[#00D9FF]/20 blur-3xl animate-pulse" />
+            <div className="absolute w-72 h-72 xl:w-80 xl:h-80 rounded-full border border-purple-500/25 dark:border-white/15 border-dashed pointer-events-none" />
 
-            {/* CHAT BUBBLE ABOVE ROBOT */}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-30 pointer-events-none w-max animate-float-2">
-              <div className="glass-pill px-4 py-2 rounded-2xl shadow-xl border border-[#FF2E8B]/40 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-2xl flex items-center gap-2 text-xs font-black text-[#111827] dark:text-white relative">
+            {/* CHAT BUBBLE ABOVE ROBOT (Properly elevated so it never overlaps widgets) */}
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-30 pointer-events-none max-w-md w-auto animate-float-2">
+              <div className="px-4 py-2 rounded-2xl shadow-xl border border-[#FF2E8B]/35 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-2xl flex items-center gap-2.5 text-xs font-black text-[#111827] dark:text-white relative whitespace-nowrap shadow-purple-500/10">
                 <span className="text-sm">🤖</span>
                 <span className="font-extrabold text-[#7C5CFF] dark:text-[#00D9FF]">NOVA AI:</span>
                 <span>"Welcome back! Ready to continue your placement journey?"</span>
-                <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-zinc-900 rotate-45 border-r border-b border-[#FF2E8B]/40" />
+                <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white dark:bg-zinc-900 rotate-45 border-r border-b border-[#FF2E8B]/35" />
               </div>
             </div>
 
-            {/* BORDERLESS 3D AI ROBOT MASCOT */}
-            <div className="relative z-10 flex flex-col items-center justify-center">
+            {/* TRANSPARENT 3D AI ROBOT MASCOT */}
+            <div className="relative z-10 flex flex-col items-center justify-center mt-4">
               
-              <div className="absolute top-2 right-2 z-30 bg-white/95 dark:bg-zinc-900/95 border border-[#FF2E8B]/40 rounded-full p-1.5 shadow-md animate-robot-wave">
-                <span className="text-xl select-none">👋</span>
+              <div className="absolute top-4 right-4 z-30 bg-white/95 dark:bg-zinc-900/95 border border-[#FF2E8B]/40 rounded-full p-1.5 shadow-md animate-robot-wave">
+                <span className="text-lg select-none">👋</span>
               </div>
 
-              <div className="relative w-64 sm:w-72 xl:w-80 h-[270px] sm:h-[290px] xl:h-[320px] flex items-center justify-center mix-blend-multiply dark:mix-blend-normal animate-float-mascot">
+              <div className="relative w-64 sm:w-72 xl:w-80 h-[280px] sm:h-[300px] xl:h-[330px] flex items-center justify-center animate-float-mascot">
                 <img
                   src="/login-3d-ai-robot.png"
                   alt="ExamNova Login 3D AI Robot"
-                  className="w-full h-full object-contain filter drop-shadow-[0_25px_40px_rgba(124,92,255,0.35)] select-none pointer-events-none"
+                  className="w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(124,92,255,0.35)] select-none pointer-events-none"
                 />
               </div>
 
               {/* Volumetric Ground Shadow */}
-              <div className="w-48 h-3.5 rounded-full bg-[#111827]/20 dark:bg-black/60 blur-sm mt-[-10px] animate-pulse-shadow" />
+              <div className="w-48 h-3.5 rounded-full bg-[#111827]/15 dark:bg-black/50 blur-sm mt-[-10px] animate-pulse-shadow" />
             </div>
 
-            {/* 8 FLOATING GLASS WIDGETS AROUND ROBOT */}
+            {/* 6 BALANCED FLOATING GLASS WIDGETS AROUND ROBOT */}
             {FLOATING_WIDGETS.map((widget, idx) => {
               const Icon = widget.icon;
               return (
                 <div
                   key={widget.id}
-                  className={`absolute z-20 hidden sm:block ${idx % 2 === 0 ? "animate-float-1" : "animate-float-2"}`}
+                  className={`absolute z-20 ${idx % 2 === 0 ? "animate-float-1" : "animate-float-2"}`}
                   style={{ top: widget.top, left: widget.left, right: widget.right }}
                 >
                   <div className={`px-3.5 py-1.5 rounded-2xl ${widget.borderColor} shadow-xl backdrop-blur-2xl bg-white/85 dark:bg-white/[0.08] border flex items-center gap-2 text-xs font-bold text-[#111827] dark:text-white hover:scale-105 transition-transform cursor-pointer`}>
@@ -271,7 +270,7 @@ function LoginPageContent() {
             })}
 
             {/* BOTTOM STATUS BAR (FUTURISTIC FOOTER CAPSULES) */}
-            <div className="mt-8 pt-4 w-full flex flex-wrap items-center justify-center gap-3 z-20">
+            <div className="mt-8 pt-2 w-full flex flex-wrap items-center justify-center gap-3 z-20">
               <div className="px-3 py-1 rounded-full bg-white/80 dark:bg-white/[0.08] backdrop-blur-xl border border-emerald-500/30 text-[10px] font-black text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 shadow-sm">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
                 <span>AI Engine: ONLINE</span>
@@ -293,18 +292,37 @@ function LoginPageContent() {
           </div>
 
           {/* ═══════════════════════════════════════════════════
-             RIGHT SIDE (40% / 5 COLS): ULTRA-PREMIUM LOGIN CARD
+             RIGHT SIDE (MOBILE & DESKTOP): ULTRA-PREMIUM LOGIN CARD
           ═══════════════════════════════════════════════════ */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-5 w-full"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="lg:col-span-5 w-full max-w-[450px] mx-auto"
           >
-            <div className="rounded-[32px] bg-white/85 dark:bg-white/[0.06] backdrop-blur-[40px] border border-purple-500/20 dark:border-white/15 p-6 sm:p-8 shadow-[0_20px_50px_rgba(123,97,255,0.12)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.6)] relative overflow-hidden space-y-5">
+            <div className="rounded-[30px] sm:rounded-[32px] bg-white/90 dark:bg-[#0C1027]/85 backdrop-blur-[35px] border border-purple-500/20 dark:border-white/15 p-5 sm:p-7 xl:p-8 shadow-[0_20px_50px_rgba(123,97,255,0.10)] dark:shadow-[0_25px_60px_rgba(0,0,0,0.6)] relative overflow-hidden space-y-4 sm:space-y-4.5">
               
-              {/* Header */}
-              <div className="text-center space-y-1">
+              {/* Top Accent Gradient Bar */}
+              <div className="absolute top-0 left-8 right-8 h-[3px] rounded-full bg-gradient-to-r from-[#FF2E8B] via-[#7C5CFF] to-[#00D9FF]" />
+
+              {/* Header with Integrated Compact Nova Mascot Avatar on Mobile */}
+              <div className="text-center space-y-1.5 pt-0.5">
+                
+                {/* Mobile-Only Nova AI Greeting Pill */}
+                <div className="lg:hidden flex items-center justify-center gap-2 mb-1">
+                  <div className="relative w-8 h-8 rounded-full bg-gradient-to-tr from-[#7C5CFF]/20 to-[#FF2E8B]/20 p-1 flex items-center justify-center border border-purple-500/20">
+                    <img 
+                      src="/login-3d-ai-robot.png" 
+                      alt="Nova AI" 
+                      className="w-full h-full object-contain filter drop-shadow-[0_2px_4px_rgba(124,92,255,0.4)]"
+                    />
+                  </div>
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-purple-500/10 dark:bg-white/10 text-[10px] font-extrabold text-[#7C5CFF] dark:text-[#00D9FF]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    NOVA AI ASSISTED
+                  </span>
+                </div>
+
                 <h2 className="text-2xl sm:text-3xl font-black text-[#111827] dark:text-white tracking-tight">
                   Welcome Back 👋
                 </h2>
@@ -315,7 +333,7 @@ function LoginPageContent() {
 
               {/* Error Alert */}
               {error && (
-                <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs font-bold flex items-center gap-2">
+                <div className="p-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs font-bold flex items-center gap-2 animate-shake">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   <span>{error}</span>
                 </div>
@@ -326,7 +344,7 @@ function LoginPageContent() {
                 type="button"
                 onClick={handleGoogleAuth}
                 disabled={isGoogleLoading || isLoading}
-                className="w-full h-12 rounded-2xl bg-white dark:bg-white/10 hover:bg-zinc-50 dark:hover:bg-white/15 border border-purple-500/20 dark:border-white/20 text-[#111827] dark:text-white font-extrabold text-xs sm:text-sm shadow-sm flex items-center justify-center gap-3 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50"
+                className="w-full h-11 sm:h-12 rounded-2xl bg-white dark:bg-white/10 hover:bg-zinc-50 dark:hover:bg-white/15 border border-purple-500/20 dark:border-white/20 text-[#111827] dark:text-white font-extrabold text-xs sm:text-sm shadow-sm flex items-center justify-center gap-3 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 select-none"
               >
                 {isGoogleLoading ? (
                   <div className="w-5 h-5 border-2 border-[#7C5CFF] border-t-transparent rounded-full animate-spin" />
@@ -342,25 +360,30 @@ function LoginPageContent() {
               </button>
 
               {/* Divider */}
-              <div className="relative flex items-center justify-center my-2">
+              <div className="relative flex items-center justify-center my-1 select-none">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-purple-500/10 dark:border-white/10" />
                 </div>
-                <span className="relative px-3 bg-white dark:bg-[#0E1329] text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest rounded-full">
+                <span className="relative px-3 bg-white dark:bg-[#0C1027] text-[10px] font-black text-zinc-400 dark:text-zinc-500 uppercase tracking-widest rounded-full">
                   OR CONTINUE WITH EMAIL
                 </span>
               </div>
 
               {/* Login Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-3.5 sm:space-y-4">
                 
                 {/* Email Field */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Email Address</label>
+                <div className="space-y-1 sm:space-y-1.5">
+                  <label htmlFor="email" className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                    Email Address
+                  </label>
                   <div className="relative">
-                    <Mail className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Mail className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <input
+                      id="email"
+                      name="email"
                       type="email"
+                      autoComplete="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -371,17 +394,22 @@ function LoginPageContent() {
                 </div>
 
                 {/* Password Field */}
-                <div className="space-y-1.5">
+                <div className="space-y-1 sm:space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-zinc-700 dark:text-zinc-300">Password</label>
+                    <label htmlFor="password" className="text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                      Password
+                    </label>
                     <Link href="/forgot-password" className="text-[11px] font-extrabold text-[#7C5CFF] dark:text-[#00D9FF] hover:underline">
                       Forgot Password?
                     </Link>
                   </div>
                   <div className="relative">
-                    <Lock className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                    <Lock className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                     <input
+                      id="password"
+                      name="password"
                       type={showPassword ? "text" : "password"}
+                      autoComplete="current-password"
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -391,7 +419,8 @@ function LoginPageContent() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 cursor-pointer"
                     >
                       {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
@@ -399,15 +428,15 @@ function LoginPageContent() {
                 </div>
 
                 {/* Remember Me */}
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 select-none">
                   <input
                     type="checkbox"
                     id="remember"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded border-purple-500/30 text-[#7C5CFF] focus:ring-[#7C5CFF]"
+                    className="w-4 h-4 rounded border-purple-500/30 text-[#7C5CFF] focus:ring-[#7C5CFF] cursor-pointer"
                   />
-                  <label htmlFor="remember" className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 cursor-pointer">
+                  <label htmlFor="remember" className="text-xs font-semibold text-zinc-600 dark:text-zinc-400 cursor-pointer select-none">
                     Remember me for 30 days
                   </label>
                 </div>
@@ -416,25 +445,34 @@ function LoginPageContent() {
                 <button
                   type="submit"
                   disabled={isLoading || isGoogleLoading}
-                  className="w-full h-12 rounded-2xl bg-gradient-to-r from-[#FF2E8B] via-[#7C5CFF] to-[#00D9FF] hover:opacity-95 text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-[#FF2E8B]/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 border-0"
+                  className="w-full h-11 sm:h-12 rounded-2xl bg-gradient-to-r from-[#FF2E8B] via-[#7C5CFF] to-[#00D9FF] hover:opacity-95 text-white font-black text-xs sm:text-sm uppercase tracking-wider shadow-lg shadow-[#FF2E8B]/25 flex items-center justify-center gap-2 transition-all hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 border-0 select-none"
                 >
-                  <span>{isLoading ? "Signing In..." : "Sign In to ExamNova"}</span>
-                  <ArrowRight className="w-4 h-4" />
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Signing In...</span>
+                    </div>
+                  ) : (
+                    <>
+                      <span>Sign In to ExamNova</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
                 </button>
 
               </form>
 
               {/* Security Badges */}
-              <div className="pt-2 border-t border-purple-500/10 dark:border-white/10 flex flex-wrap items-center justify-center gap-3 text-[10px] font-bold text-zinc-500 dark:text-zinc-400">
+              <div className="pt-2 border-t border-purple-500/10 dark:border-white/10 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[10px] font-bold text-zinc-500 dark:text-zinc-400 select-none">
                 <span className="flex items-center gap-1"><ShieldCheck className="w-3 h-3 text-emerald-500" /> SSL Encrypted</span>
                 <span>•</span>
                 <span className="flex items-center gap-1"><Zap className="w-3 h-3 text-[#00D9FF]" /> AI Protected</span>
                 <span>•</span>
-                <span>Trusted by 50,000+ Students</span>
+                <span>50,000+ Students</span>
               </div>
 
               {/* Card Footer */}
-              <div className="text-center pt-1 text-xs font-semibold text-zinc-600 dark:text-zinc-400">
+              <div className="text-center pt-0.5 text-xs font-semibold text-zinc-600 dark:text-zinc-400 select-none">
                 Don't have an account?{" "}
                 <Link href="/register" className="font-extrabold text-[#7C5CFF] dark:text-[#00D9FF] hover:underline">
                   Create Account
