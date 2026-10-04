@@ -86,13 +86,34 @@ Ensure the following buckets exist in Supabase Storage (`Storage` tab):
 
 ## 5. Google Cloud OAuth Configuration
 
+### A. OAuth Consent Screen (Branding) — Replace `supabase.co` with "Exam Nova"
+By default, Google shows the raw redirect domain (`iwpsckraxqrnkcfwdmgf.supabase.co`) on the account chooser unless the OAuth Consent Screen branding is configured.
+
+1. Navigate to [Google Cloud Console: OAuth consent screen](https://console.cloud.google.com/apis/credentials/consent).
+2. Configure **App Information**:
+   - **App name**: `Exam Nova` (or `ExamNova`)
+   - **User support email**: Select your Google email address.
+   - **App logo**: Upload `public/logo.jpg` (or your 120x120 Exam Nova logo).
+3. Configure **App Domain**:
+   - **Application home page**: `https://exam-nova-six.vercel.app` (or your production URL / `http://localhost:3000`).
+   - **Application privacy policy link**: `https://exam-nova-six.vercel.app/privacy`
+   - **Application terms of service link**: `https://exam-nova-six.vercel.app/terms`
+   - **Authorized domains**: Add `supabase.co` and `vercel.app` (or your custom domain).
+4. Configure **Developer Contact Information**:
+   - Add your email address.
+5. Click **Save and Continue**.
+6. Under **Audience / Publishing Status**:
+   - While in **Testing**, add your email under **Test users** so the app name displays without warnings.
+   - Click **Publish App** to move to **Production** so all users see **"Exam Nova"** instead of the redirect domain.
+
+### B. OAuth 2.0 Client Credentials
 1. Go to [Google Cloud Console Credentials](https://console.cloud.google.com/apis/credentials).
-2. Select your OAuth 2.0 Client ID (`825535258165-on4bhc17fikjdt21g8le5b2b4vs6e5kt.apps.googleusercontent.com`).
+2. Select your Web Client ID (`825535258165-on4bhc17fikjdt21g8le5b2b4vs6e5kt.apps.googleusercontent.com`).
 3. Under **Authorized JavaScript origins**, add:
    - `http://localhost:3000`
    - `https://your-domain.com`
    - `https://*.vercel.app`
-4. Under **Authorized redirect URIs**, add your Supabase Auth callback URI:
+4. Under **Authorized redirect URIs**, ensure your Supabase Auth callback URI is present:
    - `https://iwpsckraxqrnkcfwdmgf.supabase.co/auth/v1/callback`
 
 ---
