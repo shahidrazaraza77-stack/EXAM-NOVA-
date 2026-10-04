@@ -1,3 +1,33 @@
+<div align="center">
+
+# 🚀 ExamNova
+
+### AI-Powered Placement Preparation Platform
+
+<img src="./assets/examnova-home.png" alt="ExamNova Homepage" width="100%">
+
+<p>
+  <strong>Crack Placements with AI-Powered Preparation</strong>
+</p>
+
+<p>
+  Resume Builder • AI Interview Coach • Coding • Aptitude • Company Preparation • Analytics
+</p>
+
+</div>
+
+---
+
+## 🎯 About ExamNova
+
+ExamNova is a modern AI-powered placement preparation platform designed to bring resume building, coding practice, aptitude preparation, interview preparation, company-specific preparation, analytics, and AI-powered learning into one ecosystem.
+
+> 🔒 **Current Status:** Private Development / Personal Testing
+>
+> ExamNova is currently being developed and tested privately before a public release.
+
+
+
 # 🚀 ExamNova — AI-Powered Placement Preparation Platform
 
 > **Crack Placements with AI-Powered Preparation**
