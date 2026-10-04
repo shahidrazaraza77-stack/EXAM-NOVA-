@@ -242,20 +242,20 @@ export default function Hero() {
             {/* 3D ROBOT MASCOT IMAGE */}
             <div className="relative z-10 flex flex-col items-center justify-center">
               
-              <div className="absolute top-2 right-2 z-30 bg-white/90 dark:bg-zinc-900/90 border border-pink-500/30 rounded-full p-2 shadow-md animate-robot-wave">
+              <div className="absolute top-2 right-2 z-30 bg-white/90 dark:bg-zinc-900/90 border border-orange-500/30 rounded-full p-2 shadow-md animate-robot-wave">
                 <span className="text-xl select-none">👋</span>
               </div>
 
               <div className="relative w-64 sm:w-80 h-[280px] sm:h-[340px] flex items-center justify-center animate-float-mascot">
                 <img
-                  src="/mascot-3d-robot.png"
-                  alt="ExamNova Official 3D Mascot"
-                  className="w-full h-full object-contain filter drop-shadow-[0_25px_35px_rgba(236,72,153,0.3)] select-none pointer-events-none"
+                  src="/cute-orange-robot.png"
+                  alt="ExamNova AI Mascot"
+                  className="w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(255,140,0,0.35)] select-none pointer-events-none"
                 />
               </div>
 
               {/* Soft Ground Shadow */}
-              <div className="w-48 h-3.5 rounded-full bg-pink-500/20 dark:bg-pink-500/30 blur-md mt-[-10px] animate-pulse-shadow" />
+              <div className="w-48 h-3.5 rounded-full bg-orange-500/20 dark:bg-orange-500/30 blur-md mt-[-10px] animate-pulse-shadow" />
             </div>
 
           </motion.div>
