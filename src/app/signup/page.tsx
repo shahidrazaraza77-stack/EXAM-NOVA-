@@ -242,23 +242,18 @@ function NewMascotRegistrationPage() {
             </div>
           </div>
 
-          {/* NEW 3D PIXAR AI MASCOT FOR REGISTRATION PAGE */}
+          {/* 3D EXAMNOVA GRADUATE AI MASCOT */}
           <div className="relative z-10 flex flex-col items-center justify-center">
-            
-            <div className="absolute top-1 right-2 z-30 bg-white/95 dark:bg-zinc-900/95 border border-[#FF2E8B]/40 rounded-full p-1.5 shadow-md animate-robot-wave">
-              <span className="text-lg select-none">👋</span>
-            </div>
-
-            <div className="relative w-64 xl:w-72 h-[260px] xl:h-[290px] flex items-center justify-center mix-blend-multiply dark:mix-blend-normal animate-float-mascot">
+            <div className="relative w-64 xl:w-76 h-[270px] xl:h-[300px] flex items-center justify-center animate-float-mascot">
               <img
-                src="/mascot-registration-3d.png"
-                alt="New ExamNova 3D AI Registration Mascot"
-                className="w-full h-full object-contain filter drop-shadow-[0_25px_40px_rgba(123,97,255,0.35)] select-none pointer-events-none"
+                src="/exam-nova-diploma-robot.png"
+                alt="ExamNova Graduate AI Mascot"
+                className="w-full h-full object-contain filter drop-shadow-[0_20px_35px_rgba(255,46,139,0.35)] select-none pointer-events-none"
               />
             </div>
 
             {/* Soft Volumetric Ground Shadow */}
-            <div className="w-44 h-3 rounded-full bg-[#111827]/20 dark:bg-black/60 blur-sm mt-[-10px] animate-pulse-shadow" />
+            <div className="w-44 h-3 rounded-full bg-[#111827]/15 dark:bg-black/50 blur-sm mt-[-10px] animate-pulse-shadow" />
           </div>
 
           {/* 8 ORBITING GLASS WIDGETS AROUND MASCOT */}
