@@ -33,7 +33,7 @@ function NewMascotRegistrationPage() {
   const { user, loading: authLoading, register, loginWithGoogle } = useAuth();
   const { toast } = useToast();
 
-  const [role, setRole] = useState<"student" | "recruiter">("student");
+  const role = "student";
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -69,7 +69,7 @@ function NewMascotRegistrationPage() {
     setIsGoogleLoading(true);
     setError("");
     try {
-      const redirectPath = role === "recruiter" ? "/dashboard/recruiter" : "/dashboard";
+      const redirectPath = "/dashboard";
       await loginWithGoogle(redirectPath);
       toast.success("Redirecting to Google authentication...");
     } catch (err: any) {
@@ -322,43 +322,14 @@ function NewMascotRegistrationPage() {
           ) : (
             <div className="space-y-4">
               
-              {/* HEADER & SEGMENTED CONTROL IN ONE ROW */}
-              <div className="flex items-center justify-between gap-3">
-                <div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-[#111827] dark:text-white tracking-tight flex items-center gap-2">
-                    Create Account <span className="text-[#FF2E8B]">✨</span>
-                  </h2>
-                  <p className="text-xs sm:text-sm font-semibold text-zinc-500 dark:text-zinc-400 mt-0.5">
-                    Join the future of AI-powered placements.
-                  </p>
-                </div>
-
-                {/* Role Selector Segmented Control */}
-                <div className="p-1 rounded-full bg-[#F8FAFF] dark:bg-zinc-900 border border-[#7B61FF]/15 dark:border-white/10 flex items-center relative shadow-inner shrink-0">
-                  <button
-                    type="button"
-                    onClick={() => setRole("student")}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold transition-all z-10 cursor-pointer border-0 ${
-                      role === "student" ? "text-white" : "text-zinc-500 dark:text-zinc-400"
-                    }`}
-                  >
-                    Student
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setRole("recruiter")}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-extrabold transition-all z-10 cursor-pointer border-0 ${
-                      role === "recruiter" ? "text-white" : "text-zinc-500 dark:text-zinc-400"
-                    }`}
-                  >
-                    Recruiter
-                  </button>
-                  <div
-                    className={`absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-gradient-to-r from-[#FF2E8B] via-[#7B61FF] to-[#5B8CFF] transition-all duration-200 ${
-                      role === "student" ? "left-1" : "left-[calc(50%+1px)]"
-                    }`}
-                  />
-                </div>
+              {/* HEADER */}
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-black text-[#111827] dark:text-white tracking-tight flex items-center gap-2">
+                  Create Account <span className="text-[#FF2E8B]">✨</span>
+                </h2>
+                <p className="text-xs sm:text-sm font-semibold text-zinc-500 dark:text-zinc-400 mt-0.5">
+                  Join the future of AI-powered placements.
+                </p>
               </div>
 
               {/* ERROR BANNER */}
