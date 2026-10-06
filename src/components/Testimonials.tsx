@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { 
-  Quote, Play, ArrowRight, Sparkles, Video, ChevronLeft, ChevronRight, CheckCircle2 
+  Quote, Play, ArrowRight, Sparkles, Video, ChevronLeft, ChevronRight, CheckCircle2, X 
 } from "lucide-react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import Link from "next/link";
@@ -231,40 +231,55 @@ export default function Testimonials() {
               <h4 className="text-lg font-bold text-zinc-900 dark:text-white tracking-tight leading-tight">Hear From Successful Students</h4>
             </div>
 
-            {/* Video Thumbnail mockup */}
-            <div className="flex-1 min-h-[180px] flex items-center justify-center relative mt-6 mb-3 bg-zinc-50 dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-850 rounded-2xl overflow-hidden group/video">
-              {/* Premium abstract SVG thumbnail graphic */}
-              <div className="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none" />
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div className="w-36 h-36 rounded-full bg-pink-500/10 dark:bg-purple-500/10 blur-xl animate-pulse" />
-                <div className="w-48 h-48 rounded-full bg-rose-500/5 dark:bg-indigo-500/5 blur-2xl" />
-              </div>
-
+            {/* Video Player & Testimonial */}
+            <div className="flex-1 min-h-[220px] flex items-center justify-center relative mt-6 mb-3 bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-2xl overflow-hidden group/video shadow-inner">
               {isPlayingVideo ? (
-                <div className="absolute inset-0 z-20 bg-white/95 dark:bg-zinc-950 flex flex-col items-center justify-center p-6 text-center">
-                  <div className="w-12 h-12 rounded-full border-2 border-pink-500 dark:border-indigo-500 border-t-transparent animate-spin mb-4" />
-                  <p className="text-sm font-bold text-zinc-700 dark:text-zinc-300">Connecting to Stream...</p>
+                <div className="absolute inset-0 z-30 bg-black flex items-center justify-center">
+                  <video
+                    className="w-full h-full object-contain rounded-2xl"
+                    src="/testimonial.mp4"
+                    controls
+                    autoPlay
+                    playsInline
+                  />
                   <button 
                     onClick={(e) => { e.stopPropagation(); setIsPlayingVideo(false); }}
-                    className="mt-3 text-xs text-pink-500 dark:text-indigo-400 hover:text-pink-600 dark:hover:text-indigo-300 underline cursor-pointer"
+                    className="absolute top-2.5 right-2.5 z-40 p-1.5 rounded-full bg-black/70 hover:bg-black/90 text-white backdrop-blur-sm transition-colors cursor-pointer border border-white/20"
+                    title="Close video"
                   >
-                    Close Player
+                    <X className="w-4 h-4" />
                   </button>
                 </div>
-              ) : null}
+              ) : (
+                <div 
+                  onClick={() => setIsPlayingVideo(true)}
+                  className="w-full h-full min-h-[220px] flex items-center justify-center relative cursor-pointer"
+                >
+                  {/* Real video preview thumbnail behind play button */}
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover opacity-60 filter brightness-75 group-hover/video:scale-105 transition-transform duration-500 pointer-events-none"
+                    src="/testimonial.mp4#t=0.5"
+                    preload="metadata"
+                    muted
+                    playsInline
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 pointer-events-none" />
 
-              {/* Play button */}
-              <button 
-                onClick={() => setIsPlayingVideo(true)}
-                className="w-16 h-16 rounded-full bg-gradient-to-tr from-pink-600 to-rose-600 dark:from-purple-600 dark:to-indigo-600 border border-white/20 flex items-center justify-center text-white shadow-2xl z-20 group-hover:scale-110 group-hover/video:shadow-[0_0_30px_rgba(219,39,119,0.4)] dark:group-hover/video:shadow-[0_0_30px_rgba(139,92,246,0.4)] transition-all duration-300 cursor-pointer"
-              >
-                <Play className="w-6 h-6 fill-current ml-1" />
-              </button>
+                  {/* Play button */}
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); setIsPlayingVideo(true); }}
+                    className="w-16 h-16 rounded-full bg-gradient-to-tr from-pink-600 to-rose-600 dark:from-purple-600 dark:to-indigo-600 border border-white/30 flex items-center justify-center text-white shadow-2xl z-20 group-hover:scale-110 group-hover/video:shadow-[0_0_30px_rgba(219,39,119,0.5)] dark:group-hover/video:shadow-[0_0_30px_rgba(139,92,246,0.5)] transition-all duration-300 cursor-pointer"
+                    aria-label="Play testimonial video"
+                  >
+                    <Play className="w-6 h-6 fill-current ml-1" />
+                  </button>
 
-              <div className="absolute bottom-3 left-3 bg-white/90 dark:bg-zinc-950/90 border border-zinc-200 dark:border-zinc-800 px-3 py-1.5 rounded-lg text-[10px] font-bold text-zinc-600 dark:text-zinc-400 z-20 flex items-center gap-2 backdrop-blur-md">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                Play Platform Tour & Stories
-              </div>
+                  <div className="absolute bottom-3 left-3 bg-black/70 border border-white/15 px-3 py-1.5 rounded-lg text-[10px] font-bold text-white z-20 flex items-center gap-2 backdrop-blur-md">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Hear From Successful Students
+                  </div>
+                </div>
+              )}
             </div>
           </motion.div>
 

@@ -347,11 +347,15 @@ export default function Hero() {
       {/* VIDEO DEMO MODAL */}
       <AnimatePresence>
         {showDemoModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md"
+            onClick={() => setShowDemoModal(false)}
+          >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
+              onClick={(e) => e.stopPropagation()}
               className="relative w-full max-w-4xl bg-zinc-900 rounded-3xl overflow-hidden shadow-2xl border border-white/10"
             >
               <div className="flex items-center justify-between p-4 border-b border-zinc-800">
@@ -368,12 +372,12 @@ export default function Hero() {
               </div>
 
               <div className="relative aspect-video bg-black flex items-center justify-center">
-                <iframe
-                  className="w-full h-full"
-                  src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1"
-                  title="ExamNova Platform Tour"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
+                <video
+                  className="w-full h-full object-contain"
+                  src="/watch-demo.mp4"
+                  controls
+                  autoPlay
+                  playsInline
                 />
               </div>
             </motion.div>
