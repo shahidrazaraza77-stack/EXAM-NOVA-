@@ -374,11 +374,14 @@ export default function Hero() {
               <div className="relative aspect-video bg-black flex items-center justify-center">
                 <video
                   className="w-full h-full object-contain"
-                  src="/watch-demo.mp4"
                   controls
                   autoPlay
                   playsInline
-                />
+                >
+                  <source src="/watch-demo.mp4" type="video/mp4" />
+                  <source src="/video/watch-demo.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             </motion.div>
           </div>

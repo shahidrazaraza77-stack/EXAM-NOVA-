@@ -11,7 +11,7 @@ const securityHeaders = [
   },
   {
     key: "X-Frame-Options",
-    value: "DENY",
+    value: "SAMEORIGIN",
   },
   {
     key: "X-Content-Type-Options",
@@ -34,7 +34,9 @@ const securityHeaders = [
       "img-src 'self' data: blob: https://iwpsckraxqrnkcfwdmgf.supabase.co https://lh3.googleusercontent.com https://*.googleusercontent.com https://images.unsplash.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       "connect-src 'self' https://iwpsckraxqrnkcfwdmgf.supabase.co wss://iwpsckraxqrnkcfwdmgf.supabase.co https://generativelanguage.googleapis.com https://accounts.google.com",
-      "frame-src 'self' https://accounts.google.com",
+      "media-src 'self' data: blob: https:",
+      "frame-src 'self' https://accounts.google.com https://www.youtube.com https://www.youtube-nocookie.com",
+      "frame-ancestors 'self' https://*.vercel.app https://vercel.com",
       "worker-src 'self' blob:",
       "object-src 'none'",
       "base-uri 'self'",
@@ -65,6 +67,14 @@ const nextConfig: NextConfig = {
       {
         source: "/_supabase/:path*",
         destination: "https://iwpsckraxqrnkcfwdmgf.supabase.co/:path*",
+      },
+      {
+        source: "/watch%20demo.mp4",
+        destination: "/watch-demo.mp4",
+      },
+      {
+        source: "/video/watch%20demo.mp4",
+        destination: "/video/watch-demo.mp4",
       },
     ];
   },

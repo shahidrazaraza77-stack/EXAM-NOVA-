@@ -237,11 +237,14 @@ export default function Testimonials() {
                 <div className="absolute inset-0 z-30 bg-black flex items-center justify-center">
                   <video
                     className="w-full h-full object-contain rounded-2xl"
-                    src="/testimonial.mp4"
                     controls
                     autoPlay
                     playsInline
-                  />
+                  >
+                    <source src="/testimonial.mp4" type="video/mp4" />
+                    <source src="/video/testimonial.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
                   <button 
                     onClick={(e) => { e.stopPropagation(); setIsPlayingVideo(false); }}
                     className="absolute top-2.5 right-2.5 z-40 p-1.5 rounded-full bg-black/70 hover:bg-black/90 text-white backdrop-blur-sm transition-colors cursor-pointer border border-white/20"
