@@ -194,7 +194,7 @@ function NewMascotRegistrationPage() {
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2.5 group">
               <div className="w-8.5 h-8.5 rounded-xl bg-gradient-to-tr from-[#FF2E8B] via-[#7B61FF] to-[#5B8CFF] p-[1px] shadow-md group-hover:scale-105 transition-transform">
-                <div className="w-full h-full bg-white dark:bg-zinc-900 rounded-[11px] flex items-center justify-center overflow-hidden">
+                <div className="w-full h-full bg-zinc-950 rounded-[11px] flex items-center justify-center overflow-hidden">
                   <img src="/logo.jpg" className="w-full h-full object-cover" alt="ExamNova" />
                 </div>
               </div>

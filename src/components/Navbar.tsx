@@ -64,7 +64,7 @@ export default function Navbar() {
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center gap-2.5 group select-none">
               <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-500 via-purple-600 to-indigo-600 p-[1.5px] shadow-md shadow-purple-500/20 group-hover:scale-105 transition-transform duration-200">
-                <div className="w-full h-full bg-white dark:bg-zinc-900 rounded-[14px] flex items-center justify-center overflow-hidden">
+                <div className="w-full h-full bg-zinc-950 rounded-[14px] flex items-center justify-center overflow-hidden">
                   <img src="/logo.jpg" className="w-full h-full object-cover" alt="ExamNova Logo" />
                 </div>
               </div>
