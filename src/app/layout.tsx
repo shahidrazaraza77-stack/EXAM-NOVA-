@@ -19,6 +19,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ExamNova — AI Placement Coach",
   description: "An AI-powered placement preparation platform helping students improve resumes, aptitude, coding, communication, interviews, and placement readiness.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "32x32" },
+      { url: "/icon.png", type: "image/png", sizes: "256x256" },
+      { url: "/logo.jpg", type: "image/jpeg" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({

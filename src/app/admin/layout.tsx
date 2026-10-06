@@ -137,8 +137,8 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
       {/* Desktop Sidebar */}
       <aside className="hidden lg:flex flex-col w-64 border-r border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-900/50 backdrop-blur-md h-full shrink-0 z-20">
         <div className="h-16 flex items-center px-6 border-b border-zinc-200 dark:border-zinc-900 gap-2.5">
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-indigo-600/20">
-            EN
+          <div className="h-9 w-9 rounded-xl overflow-hidden bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center">
+            <img src="/logo.jpg" alt="ExamNova Logo" className="w-full h-full object-cover" />
           </div>
           <div className="flex flex-col">
             <span className="font-bold text-zinc-950 dark:text-zinc-50 tracking-tight leading-none text-base">
@@ -213,8 +213,8 @@ function AdminLayoutContent({ children }: { children: React.ReactNode }) {
           <div className="fixed inset-y-0 left-0 flex flex-col w-72 bg-white dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-950 shadow-2xl z-50 transform transition-transform animate-in slide-in-from-left duration-300">
             <div className="h-16 flex items-center justify-between px-6 border-b border-zinc-200 dark:border-zinc-900">
               <div className="flex items-center gap-2">
-                <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-violet-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg">
-                  EN
+                <div className="h-9 w-9 rounded-xl overflow-hidden bg-zinc-950 border border-zinc-200 dark:border-zinc-800 shadow-sm flex items-center justify-center">
+                  <img src="/logo.jpg" alt="ExamNova Logo" className="w-full h-full object-cover" />
                 </div>
                 <span className="font-bold text-zinc-950 dark:text-zinc-50 tracking-tight">{settings.siteName || "ExamNova"}</span>
               </div>
